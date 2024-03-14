@@ -1,41 +1,44 @@
+import { useState } from 'react'
+import './App.css'
+
 const TURNS = {
-  x: 'x',
-  o: 'o'
+  X: 'x',
+  O: 'o'
 }
 
-const board = Array(9).fill(null)
 
-const Square = ({children, updateBoard, index}) =>{
+const Square = ({children, updateBoard, index}) => {
   return(
-    <div className="square">
-      {index}
+    <div className='square'>
+      {children}
     </div>
   )
 }
 
+
 function App() {
-  
-  const [board, setBoard] = useState(Array(9).fill(null))
-  cosnt [turn, setTurn]
+const [board, setBoard] = useState(Array(9).fill(null))
+const [turn, setTurn] = useState(TURNS, X) 
 
   return (
-  <main className='board'>
-    <h1>Titac toe</h1>
-    <section className="game">
-      {
-      board.map((_, index) => {
-        return(
-          <Square
-          key={index}
-          index={index}
-          >
-            {index}
-          </Square>
-        )
-        })
-      }        
-    </section>
-  </main>  
+      <main className='board'>    
+          <h1>Tic tac toe</h1>
+              <section className='game'>
+                {
+                  board.map((_, index)=> {
+                    return(
+                     <Square
+                     key={index}
+                     index={index}
+                     >
+                      {index}
+                     </Square>
+                    )
+                  })
+                }
+
+              </section>
+      </main>
   )
 }
 export default App
