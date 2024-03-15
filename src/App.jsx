@@ -2,8 +2,8 @@ import { useState } from 'react'
 import './App.css'
 
 const TURNS = {
-  X: 'x',
-  O: 'o'
+  X: "x",
+  O: "o"
 }
 
 
@@ -13,7 +13,7 @@ const Square = ({children, isSelected, updateBoard, index}) => {
     updateBoard(index)
   }
   return(
-    <div on Click={updateBoard} className='square'>
+    <div on Click={updateBoard} className="square">
       {children}
     </div>
   )
@@ -22,7 +22,9 @@ const Square = ({children, isSelected, updateBoard, index}) => {
 
 function App() {
 const [board, setBoard] = useState(Array(9).fill(null))
+
 const [turn, setTurn] = useState(TURNS. X) 
+
 const updateBoard = (index) =>{
   const newBoard = [...board]
   newBoard[index] = turn
@@ -31,9 +33,9 @@ const updateBoard = (index) =>{
 }
 
   return (
-      <main className='board'>    
+      <main className="board">    
           <h1>Tic tac toe</h1>
-              <section className='game'>
+              <section className="game">
                 {
                   board.map((_, index)=> {
                     return(
@@ -49,7 +51,7 @@ const updateBoard = (index) =>{
                 }
 
               </section>
-              <section className='turn'>
+              <section className="turn">
                 <Square isSelected={turn === TURNS.X}>
                   {TURNS.X}
                 </Square>
