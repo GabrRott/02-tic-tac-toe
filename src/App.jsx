@@ -13,7 +13,7 @@ const Square = ({children, isSelected, updateBoard, index}) => {
     updateBoard(index)
   }
   return(
-    <div on Click={updateBoard} className="square">
+    <div onClick={handleClick} className={className}>
       {children}
     </div>
   )
@@ -26,16 +26,21 @@ const [board, setBoard] = useState(Array(9).fill(null))
 const [turn, setTurn] = useState(TURNS. X) 
 
 const updateBoard = (index) =>{
+
+  if (board[index]) return
+
   const newBoard = [...board]
   newBoard[index] = turn
+  setBoard(newBoard)
+
   const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
   setTurn(newTurn)
 }
 
   return (
-      <main className="board">    
+      <main className='board'>    
           <h1>Tic tac toe</h1>
-              <section className="game">
+              <section className='game'>
                 {
                   board.map((_, index)=> {
                     return(
@@ -51,7 +56,7 @@ const updateBoard = (index) =>{
                 }
 
               </section>
-              <section className="turn">
+              <section className='turn'>
                 <Square isSelected={turn === TURNS.X}>
                   {TURNS.X}
                 </Square>
