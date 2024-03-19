@@ -1,23 +1,13 @@
 import { useState } from 'react'
+import confetti from 'canvas-confetti'
+import { Square } from './components/Square.jsx'
+import { TURNS } from './constants.js'
+import { checkWinnerFrom, checkEndGame } from './logic/board.js'
+import { WinnerModal } from './components/WinnerModal.jsx'
+import { GameBoard } from './components/Board.jsx'
 import './App.css'
 
-const TURNS = {
-  X: "x",
-  O: "o"
-}
 
-
-const Square = ({children, isSelected, updateBoard, index}) => {
-  const className = `square ${isSelected ? 'is-selected': ''}`
-  const handleClick = () =>{
-    updateBoard(index)
-  }
-  return(
-    <div onClick={handleClick} className={className}>
-      {children}
-    </div>
-  )
-}
 
 
 function App() {
@@ -25,9 +15,23 @@ const [board, setBoard] = useState(Array(9).fill(null))
 
 const [turn, setTurn] = useState(TURNS. X) 
 
+const [winner, setWinner] = useState(null)
+
+
+
+const resetGame = ()=>{
+  setBoard(Array(9).fill(null))
+  setTurn(TURNS.X)
+  setWinner(null)
+}
+
+
+
+
 const updateBoard = (index) =>{
 
-  if (board[index]) return
+  if (board[index] || winner) return
+
 
   const newBoard = [...board]
   newBoard[index] = turn
@@ -35,25 +39,21 @@ const updateBoard = (index) =>{
 
   const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
   setTurn(newTurn)
+
+  const newWinner = checkWinnerFrom (newBoard)
+  if (newWinner) {
+    confetti()
+    setWinner(newWinner)
+  }else if (checkEndGame(newBoard)) {
+    setWinner(false)
+  }
 }
 
   return (
       <main className='board'>    
           <h1>Tic tac toe</h1>
               <section className='game'>
-                {
-                  board.map((_, index)=> {
-                    return(
-                     <Square
-                     key={index}
-                     index={index}
-                     updateBoard={updateBoard}
-                     >
-                      {board[index]}
-                     </Square>
-                    )
-                  })
-                }
+                <GameBoard board={board} updateBoard={updateBoard}></GameBoard>
 
               </section>
               <section className='turn'>
@@ -64,6 +64,10 @@ const updateBoard = (index) =>{
                   {TURNS.O}
                 </Square>
 
+              </section>
+
+              <section>
+                <WinnerModal resetGame={resetGame} winner={winner}></WinnerModal>
               </section>
       </main>
   )

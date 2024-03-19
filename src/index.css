@@ -72,7 +72,7 @@ body {
 .turn {
   display: flex;
   justify-content: center;
-  margin: 15px auto;
+  margin: 50px auto;
   width: fit-content;
   position: relative;
   border-radius: 10px;
@@ -88,7 +88,7 @@ body {
 
 .square.is-selected {
   color: #fff;
-  background: #09f;
+  background: rgb(137, 181, 211, 0.5);
 }
 
 .winner {
